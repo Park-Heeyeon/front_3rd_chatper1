@@ -1,5 +1,13 @@
-export default function LoginPage() {
-  return `
+import { authLogin } from "../utils/auth";
+import {router}  from "../main";
+import Component from "../core/Component";
+
+class LoginPage extends Component{
+  constructor() {
+    super();
+  }
+  template() {
+    return  `
     <main class='bg-gray-100 flex items-center justify-center min-h-screen'>
       <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
@@ -22,4 +30,24 @@ export default function LoginPage() {
       </div>
     </main>
   `;
+  }
+  
+  bindEvents() {
+    const loginForm = document.querySelector('#login-form');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.querySelector('#username').value;
+      if (!username) {
+        alert("아이디를 입력하세요");
+        return;
+      }
+      authLogin(username);
+      router.navigateTo('/profile');
+    })
+
+    window.addEventListener('error', () => {
+      this.handleError('의도적인 오류입니다.'); 
+    });
+  }
 }
+export default LoginPage;

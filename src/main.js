@@ -1,18 +1,20 @@
-import { renderLayout } from "./layouts/layout";
+import BasicLayout from "./layout/BasicLayout";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import ErrorPage from "./pages/NotFoundPage";
 import Router from "./utils/router";
 
+const homePage = new BasicLayout(new HomePage());
+const profilePage = new BasicLayout(new ProfilePage());
+const loginPage = new LoginPage();
+const errorPage = new ErrorPage();
+
 const routes = [
-  { path: "/", view: () => renderLayout(HomePage) },
-  {
-    path: "/profile",
-    view: () => renderLayout(ProfilePage),
-  },
-  { path: "/login", view: LoginPage },
-  { path: "*", view: NotFoundPage },
+  { path: "/", view: homePage },
+  { path: "/profile", view: profilePage},
+  { path: "/login", view: loginPage },
+  { path: "*", view: errorPage },
 ];
 
-new Router(routes);
+export const router = new Router(routes);

@@ -2,15 +2,10 @@ export const isLoggedIn = () => !!localStorage.getItem("user");
 
 export const getUser = () => {
   const user = localStorage.getItem("user");
-  return user ? JSON.parse(user) : null;
+  return user ? JSON.parse(user) : {};
 };
 
 export const authLogin = (username) => {
-  if (!username) {
-    alert("아이디를 입력하세요");
-    return;
-  }
-
   localStorage.setItem(
     "user",
     JSON.stringify({ username, email: "", bio: "" })
